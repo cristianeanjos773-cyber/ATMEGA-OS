@@ -1,0 +1,24 @@
+#include "ON_SERIAL_MESSAGE.h"
+
+void (*TOKEN_DISPATCH_TABLE[])(void) = {
+   [TURN_ON_RED_LED_COMMAND] = TURN_ON_COMMAND_LED_func,
+   [TURN_OFF_RED_LED_COMMAND] = TURN_OFF_COMMAND_LED_func,
+   [LED3_CHOSEN] = LED_3_CHOSEN_func,
+   [LED4_CHOSEN] = LED_4_CHOSEN_func,
+   [LED7_CHOSEN] = LED_7_CHOSEN_func,
+   [LED_GAME_END_COMMAND] = LED_GAME_END_func,    
+}; 
+
+void ON_SERIAL_MESSAGE(char MESSAGE) {
+
+    uint8_t TOKEN = (uint8_t)MESSAGE;
+
+    USART_SEND(COMMUNICATION_SUCCESS);    
+
+    if (!TOKEN_DISPATCH_TABLE[TOKEN]) {
+        return; 
+    }
+
+    TOKEN_DISPATCH_TABLE[TOKEN](); 
+
+}

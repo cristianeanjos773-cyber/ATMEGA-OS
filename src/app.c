@@ -1,0 +1,28 @@
+#include <app.h>
+
+
+void APP_SET_PINS() {
+  
+}
+
+void APP_INIT() {
+  
+  SCHEDULER_INIT();
+  DISTANCE_SENSOR_INIT(); 
+  USART_INIT(); 
+  ADC_INIT(); 
+  I2C_INIT();
+  APP_SET_PINS(); 
+  
+  sei();
+  
+  APP_SET_PINS(); 
+  BUZZER_DEFINE_TASK(BUZZER_SLOW_BIP, 0, BUZZER_MODE_BIP);
+  BUZZER_DEFINE_TASK(BUZZER_SLOW_BIP, 1, BUZZER_MODE_BIP);
+
+}
+  
+
+void APP_TASK() {
+  SCHEDULER_RUN();
+}
